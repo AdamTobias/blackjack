@@ -1,0 +1,1 @@
+class window.GameModel extends Backbone.Model
