@@ -9,12 +9,25 @@ class window.AppView extends Backbone.View
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
     'click .stand-button': -> @model.stand()
+    'click .new-game-button': -> 
+      @model.initialize()
+      @initialize()
 
   initialize: ->
     @listenTo(@model, 'end', @renderResults)
     @render()
+    console.log(@model.get('playerHand').score())
+    console.log(@model.get('dealerHand').trueScore())
+    if @model.get('playerHand').score() is 21 and @model.get('dealerHand').trueScore() is 21
+      @model.end('Two blackjacks!  Push push!')
+    else if @model.get('playerHand').score() is 21  
+      @model.end('Blackjack!')  
+    else if @model.get('dealerHand').trueScore() is 21
+      @model.end('Dealer blackjack :( Player loses')
 
   renderResults: (reason) ->
+    @$('.hit-button, .stand-button').attr('disabled', 'true')
+    @$('.new-game-button').css({'display': 'inline'})
     @$('.results').html new ResultsView({reason: reason}).el
 
   render: ->

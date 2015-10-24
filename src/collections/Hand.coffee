@@ -16,6 +16,12 @@ class window.Hand extends Backbone.Collection
     score + if card.get 'revealed' then card.get 'value' else 0
   , 0
 
+  trueScore: -> 
+    trueScore = @reduce (score, card) ->
+      score + card.get 'value'
+    , 0
+    if @hasAce() then trueScore += 10
+
   score: ->
     # The scores are an array of potential scores.
     # Usually, that array contains one element. That is the only score.
@@ -29,6 +35,7 @@ class window.Hand extends Backbone.Collection
       @minScore()
   
   soft: ->
-    if @hasAce() and @minscore + 10 <= 21
+    if @hasAce() and @minScore() + 10 <= 21
       true
-    false
+    else
+      false
