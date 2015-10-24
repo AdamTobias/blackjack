@@ -17,13 +17,14 @@ class window.App extends Backbone.Model
       @end('Dealer bust!  Good job player!')
     else 
       if @get('dealerHand').score() < 17 or (@get('dealerHand').score() is 17 and @get('dealerHand').soft())
-        @get('dealerHand').hit()
+        setTimeout(this.get('dealerHand').hit.bind(this.get('dealerHand')), 1000)
+
       else
         @checkWinner()
 
   stand: ->
-    context = @
-    #setTimeout(context.get('dealerHand').at(0).flip.bind(context), 1000)
+    setTimeout(this.get('dealerHand').at(0).flip.bind(this.get('dealerHand').at(0)), 500)
+
 
   checkWinner: ->
     if @get('dealerHand').score() > @get('playerHand').score()

@@ -8,7 +8,9 @@ class window.AppView extends Backbone.View
 
   events:
     'click .hit-button': -> @model.get('playerHand').hit()
-    'click .stand-button': -> @model.stand()
+    'click .stand-button': -> 
+      @$('.hit-button, .stand-button').attr('disabled', 'true')
+      @model.stand()
     'click .new-game-button': -> 
       @model.initialize()
       @initialize()
